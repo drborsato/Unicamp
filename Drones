@@ -1,0 +1,24 @@
+  static List<Integer> greatestFlightRangeDrones(Integer numberOfRequiredDrones, List<Drone> drones,
+      List<Integer> inMaintenanceDrones) {
+
+    List<Drone> orderedDrones = new LinkedList<>();
+    Set<Integer> maintenanceDrones = new HashSet<>(inMaintenanceDrones);
+
+    List<Integer> greatestFlightRange = new LinkedList<>();
+
+    for (Drone drone : drones) {
+      if (!maintenanceDrones.contains(drone.id)) {
+        int i = 0;
+        do {
+          if (orderedDrones.isEmpty() || drone.getFlightRange() > orderedDrones.get(i).getFlightRange()) {
+            orderedDrones.add(i, drone);
+            greatestFlightRange.add(i, drone.getId());
+            break;
+          }
+          i ++;
+        } while (i < numberOfRequiredDrones && i < orderedDrones.size());
+      }
+    }
+
+    return greatestFlightRange.subList(0,numberOfRequiredDrones-1);
+  }
